@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Go Fish!</title>
+  <style>
+  table, th, td {
+    border: 1px solid black;
+  }
+  </style>
+</head>
+
+<body>
+  <h1>Go Fish Info:</h1>
+  <script type="text/javascript" src="Deck.js"></script>
+  <script>
+  deck=new Deck(4,13,0);
+  game=new GoFish();
+  game.addPlayer("Jake");
+  game.addPlayer("Mike");
+  game.addPlayer("Jim");
+
+  // setInterval(game.refreshValues, 100);
+  </script>
+
+  <table id="gameInfo"></table>
+  <br>
+  <table id="players"></table>
+  <br>
+  <div id="pregame">
+    <button type="button" onclick="game.promptAddPlayer()" id="addPlayer">Add Player</button>
+    <button type="button" onclick="game.startGame()" id= "startGame">Start Game!</button>
+  </div>
+  <div id=selectors hidden=true>
+    I'm going to ask for a <select id="selectRank"></select> from <select id="selectPlayer"></select>
+    <br>
+    <button type="button" onclick="game.takeTurn1()" id="takeTurn" hidden=true>Do it!</button>
+  </div>
+</body>
+</html>
