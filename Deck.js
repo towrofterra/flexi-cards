@@ -5,6 +5,7 @@
 // Finish the play loop
 // Obfuscate other players
 // Add ai for other players (allow local play?)
+// Add a 'game status' print func - i.e. "You got 2 Q's from Jake, now what?" just below playfield
 
 
 class Deck {
@@ -56,6 +57,12 @@ class Deck {
       return this.discard.slice(0,num);
     }
   }
+
+  // Returns the rank of the given cards
+  getRank(card){
+    return card % this.numRank;
+  }
+
 }
 
 // An abstract base class for all games
@@ -245,25 +252,42 @@ class GoFish extends Game {
       this.takeTurn0();
     }
     else{
-      this.goFish(this.players[this.currentPlayer]);
+      var card = this.deck.draw(1);
+      this.players[this.currentPlayer].addCard(card);
+      if(this.deck.getRank(card) == rank){
+        this.takeTurn0();
+      }
+      else {
       this.nextPlayer();
     }
-
+    }
   }
 
   // Let the player 'go fish'!
   goFish(player){
+    player.addCard(this.deck.draw(1));
 
   }
 
   // Counts the given player's books, removes them and changes their score accordingly
   countBooks(player){
-    // var hand = player.getHandRanks;
-    // console.log("Counting hand: " + hand);
-    // var map = new Map();
-    // hand.forEach(a => map.set(a, (map.get(a) || 0) + 1));
-    // hand = hand.filter(a => map.get(a) > 1);
-    // console.log("Hand post filter: " + hand);
+    var hand = player.getHandRanks;
+    console.log("Counting hand: " + hand);
+
+    // Remove all values from hand apart from sets of 4
+    var map = new Map();
+    hand.forEach(a => map.set(a, (map.get(a) || 0) + 1));
+    hand = hand.filter(a => map.get(a) == 4);
+
+    console.log("Hand post filter: " + hand);
+
+    // Add the number of books to the player's score
+    player.changeScore(Math.floor(hand.length/4));
+
+    // Remove all 4 card sets
+    for(var i=0; i<hand.length; i++){
+      player.hand.splice(player.hand.lastIndexOf(hand[i]), 1);
+    }
   }
 
   // Refreshes the data in the tables for GoFish
