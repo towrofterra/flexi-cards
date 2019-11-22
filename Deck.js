@@ -7,6 +7,8 @@
 // Add ai for other players (allow local play?)
 // Add a 'game status' print func - i.e. "You got 2 Q's from Jake, now what?" just below playfield
 
+// Make 'Hand', & 'Card'data types
+
 
 class Deck {
   // Initializes the deck with a dictionary of __cards
